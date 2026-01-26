@@ -18,7 +18,7 @@ pipeline{
 			steps{
 				echo "building"
 				sh '''
-					./venv/bin/python -c "import fastapi; print('Build Ok')"  
+					./venv/bin/python -c "from app import app; print('Build Ok')"  
 				'''
 			}
 		}
@@ -36,7 +36,7 @@ pipeline{
 		stage("artifcat"){
 			steps{
 				echo "artifacting"
-				archiveArtifacts artifacts:"**/*.py", fingerprint:true
+				archiveArtifacts artifacts:"**/*.py,requirement.txt", fingerprint:true
 			}
 		}
 		stage("deploy"){
