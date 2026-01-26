@@ -36,7 +36,17 @@ pipeline{
 		stage("artifcat"){
 			steps{
 				echo "artifacting"
-				archiveArtifacts artifacts:"**/*.py,requirement.txt", fingerprint:true
+
+			scripts{
+				def version=""
+
+				if(env.TAG_NAME){
+					version="${env.TAG_NAME}"
+				}
+				else {
+					version="${env.BUILD_NUMBER}"
+				}
+				archiveArtifacts artifacts="**/*.py-${version}", fingerprint:true
 			}
 		}
 		stage("deploy"){
