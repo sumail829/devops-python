@@ -18,7 +18,7 @@ pipeline{
 			steps{
 				echo "building"
 				sh '''
-					./venv/bin/python -c app  
+				./venv/bin/python -c "from app import app; print('Application loaded')"
 				'''
 			}
 		}
