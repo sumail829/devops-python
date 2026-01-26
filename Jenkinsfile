@@ -7,29 +7,29 @@ pipeline{
 				echo "building"
 			}
 		}
-		stage("build"){
+		stage("test"){
 			steps{
-				echo "building"
+				echo "testing"
 			}
 		}
-		stage("build"){
+		stage("linting"){
 			steps{
-				echo "building"
+				echo "linting"
 			}
 		}
-		stage("build"){
+		stage("artifcat"){
 			steps{
-				echo "building"
+				echo "artifacting"
 			}
 		}
-		stage("build"){
+		stage("deploy"){
 			steps{
-				echo "building"
+				echo "deploying now"
 			}
 		}
-		stage("build"){
+		stage("Pushing"){
 			steps{
-				echo "building"
+				echo "pushing now"
 			}
 		}
 	}
