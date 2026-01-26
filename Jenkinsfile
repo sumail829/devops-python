@@ -37,7 +37,7 @@ pipeline{
 			steps{
 				echo "artifacting"
 
-				scripts{
+				script{
 					def version=""
 
 					if(env.TAG_NAME){
@@ -46,7 +46,7 @@ pipeline{
 					else {
 						version="${env.BUILD_NUMBER}"
 					}
-					archiveArtifacts artifacts="**/*.py-${version}", fingerprint:true
+					archiveArtifacts artifacts="**/*.py", fingerprint:true
 				}
 		        }
 
