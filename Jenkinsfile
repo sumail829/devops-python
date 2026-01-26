@@ -36,6 +36,7 @@ pipeline{
 		stage("artifcat"){
 			steps{
 				echo "artifacting"
+				archiveArtifacts artifacts:"**/*.py", fingerprint:true
 			}
 		}
 		stage("deploy"){
