@@ -6,10 +6,10 @@ pipeline{
 			steps{
 				echo "installing"
 				sh '''
-				sudo apt install python3-full python3-venv -y
+				python3 --version
 				python3 -m venv venv
-				source venv/bin/activate
-				pip install -r fastapi uvicorn httpx pytest
+				./venv/bin/pip install --upgrade pip	
+				./venv/bin/pip install fastapi uvicorn httpx pytest
 
 				'''
 			}
@@ -17,13 +17,15 @@ pipeline{
 		stage("build"){
 			steps{
 				echo "building"
-				sh "uvicorn app:app --reload"
+				sh '''
+					./venv/bin/python -c "import fastapi; print('Build Ok')"  
+				'''
 			}
 		}
 		stage("test"){
 			steps{
 				echo "testing"
-				sh "pytest"
+				sh "./venv/bin/pytest"
 			}
 		}
 		stage("linting"){
