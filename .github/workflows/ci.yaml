@@ -41,7 +41,33 @@ jobs:
       - name: Download a Build Artifact
         uses: actions/download-artifact@v7.0.0
         with:
-          name: pyhton-app
-          path: python-app.zip
+          name: python-app
+          path: .
+      - name: list the direstory
+        run: |
+          ls -al
+      - name: copy content 
+        run: echo "${{ secrets.SSH_KEY }}" > devops-tos.pem
+      - name: give permission
+        run: chmod 600 devops-tos.pem
+      - name: login to ssh
+        run: |
+          ssh -o StrictHostKeyChecking=no -i devops-tos.pem ${{ vars.SSH_USER }}@${{ vars.SERVER_IP }} << 'ENDSSH'
+          if [ ! -d /home/ubuntu/suman2 ]; then
+           mkdir /home/ubuntu/suman2
+          fi
+          ENDSSH
+      - name: SCP artifacts to server
+        run: scp -i devops-tos.pem -rv python-app.zip ${{vars.SSH_USER}}@${{vars.SERVER_IP}}:/home/ubuntu/suman2
+      - name: Run the program
+        run: |
+          ssh -o StrictHostKeyChecking=no -i devops-tos.pem ${{ vars.SSH_USER }}@{{ vars.SERVER_IP }} << 'ENDSSH'
+          cd /home/ubuntu/suman2
+          unzip -o python-app.zip
+          pip3 install -r build/requirements.txt
+          sudo fuser -k 8000/tcp || true
+          nohup python3 build/app.py > app.log 2>&1 & 
+          ENDSSH
+
 
 
