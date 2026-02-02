@@ -61,13 +61,14 @@ jobs:
         run: scp -i devops-tos.pem -rv python-app.zip ${{vars.SSH_USER}}@${{vars.SERVER_IP}}:/home/ubuntu/suman2
       - name: Run the program
         run: |
-          ssh -o StrictHostKeyChecking=no -i devops-tos.pem ${{ vars.SSH_USER }}@{{ vars.SERVER_IP }} << 'ENDSSH'
+          ssh -o StrictHostKeyChecking=no -i devops-tos.pem ${{ vars.SSH_USER }}@${{ vars.SERVER_IP }} << 'ENDSSH'
           cd /home/ubuntu/suman2
           unzip -o python-app.zip
           pip3 install -r build/requirements.txt
           sudo fuser -k 8000/tcp || true
           nohup python3 build/app.py > app.log 2>&1 & 
           ENDSSH
+
 
 
 
