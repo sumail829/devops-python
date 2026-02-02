@@ -34,4 +34,14 @@ jobs:
           name: python-app
           path: python-app.zip
           retention-days: 1
+  deploy-on-aws:
+     needs: Build-Python-Artifacts
+     runs-on: ubuntu-latest
+     steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v7.0.0
+        with:
+          name: pyhton-app
+          path: python-app.zip
+
 
