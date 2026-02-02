@@ -28,3 +28,10 @@ jobs:
           mkdir build 
           cp app.py requirements.txt README.md nginx.conf calculator.service build/
           zip -r python-app.zip build/
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v6.0.0
+        with:
+          name: python-app
+          path: python-app.zip
+          retention-days: 1
+
