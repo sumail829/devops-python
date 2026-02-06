@@ -95,7 +95,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
           - name: copy content
-            run: echo "${{ secrets.DOCKERHUB_TOKEN }}" > devops-tos.pem
+            run: echo "${{ secrets.SSH_KEY }}" > devops-tos.pem
           - name: give permission
             run: chmod 600 devops-tos.pem
           - name: login to server
@@ -104,6 +104,7 @@ jobs:
                 docker pull sumail829/pyapp:latest
                 docker run -d -p 3006:8000 sumail829/pyapp:latest
               ENDSSH
+
 
 
 
