@@ -70,19 +70,32 @@
 #           ENDSSH
 
 on: 
-    workflow_dispatch:
-        inputs:
-            tags:
-              description: version tag for docker image
-              required: true
-              default: 'latest'
+  push:
+    branches:
+      - main
 jobs:
     build-docker-image:
+      runs-on: ubuntu-latest
       steps:
         - name: Checkout
           uses: actions/checkout@v6.0.2
-        - name: 
+        - name: list content od folder
+          run: ls -al
+        - name: Run docker build command
+          run: docker build -t sumail829/pyapp:latest .
+        - name: Docker Login
+          uses: docker/login-action@v3.7.0
+          with:
+            username: ${{ secrets.DOCKERHUB_USERNAME }}
+            password: ${{ secrets.DOCKERHUB_TOKEN }}
+        - name: push to docker hub
+          run: docker push sumail829/pyapp:latest
     
+
+
+
+
+
 
 
 
