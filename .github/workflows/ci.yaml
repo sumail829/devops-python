@@ -70,12 +70,9 @@
 #           ENDSSH
 
 on: 
-    workflow_dispatch:
-        inputs:
-            tags:
-              description: version tag for docker image
-              required: true
-              default: 'latest'
+  push:
+    branches:
+      - main
 jobs:
     build-docker-image:
       runs-on: ubuntu-latest
@@ -92,6 +89,7 @@ jobs:
         - name: push to docker hub
           run: docker push sumail829/pyapp:latest
     
+
 
 
 
