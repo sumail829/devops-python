@@ -90,7 +90,20 @@ jobs:
             password: ${{ secrets.DOCKERHUB_TOKEN }}
         - name: push to docker hub
           run: docker push sumail829/pyapp:latest
-    
+          
+    deploy-to-aws:
+        runs-on: ubuntu-latest
+        steps:
+          - name: copy content
+            run: echo "${{ secrets.DOCKERHUB_TOKEN }}" > devops-tos.pem
+          - name: give permission
+            run: chmod 600 devops-tos.pem
+          - name: login to server
+            run: |
+              ssh -o StrictHostKeyChecking=no -i devops-tos.pem ${{ vars.SSH_USER }}@${{ vars.SERVER_IP }} << 'ENDSSH'
+                docker pull sumail829/pyapp:latest
+                docker run -d -p 3006:8000 sumail829/pyapp:latest
+              ENDSSH
 
 
 
